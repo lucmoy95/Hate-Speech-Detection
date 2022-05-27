@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<style>
+            body{
+                background-color:#ccf9ff; 
+            }
+            header{
+                color:black; text-align: center; padding-top: 2px; padding-bottom:2px; background-color: #ccf9ff; font-size: 30px;
+            }
+            input,textarea{
+                width: 100%; height: auto;font-size: medium;
+            }
+            label {
+                text-align: right; clear: both; float: left; margin-right: 15px; margin-bottom: 15px;
+            }
+            form{
+                width: 100%; margin: 10px; font-size:x-large;
+            }
+            button{
+                float: right; width: 100px; height: 40px; font-size: large;
+            }
+			img{
+				float: left; position: absolute; left: 10px;
+			}
+			#site_desc{
+				text-align: center;
+			}
+			#site_desc_p{
+				margin-top: 50px; margin-bottom: 50px; font-size: x-large;
+			}
+            #site_form{
+				color: black; display: inline-flex; border-width: 5px; margin-left: 10%; margin-right: 10%; width: 80%; height:500px;
+
+            }
+            #layer{
+                background-color:#ccf9ff; 
+            }
+			.red{
+				color:red;
+			}
+			.green{
+				color:green;
+			}
+    </style>
+
+	<title>
+	Hate Speech Detector
+	</title>
+</head>
+<body>
+	<header>
+	<img src="{{url_for('static', filename='logo.png')}}" width="150px" height="auto">
+	<h1>Hate Speech Detector</h1>
+	</header>
+	
+		<div id="layer">
+		<div id="site_desc">
+		<p id="site_desc_p">
+		This is a description of the website, which lets the users know what this website is about and how it's used.
+		</p>
+		</div>
+		
+
+		<div id="site_form">
+			<form action="{{ url_for('hate_speech_detection') }}" method="post">
+
+				<div>
+					<label>Please enter a sentence:</label>
+					<textarea rows="15" id="sentence" name="input_sentence">{{input}}</textarea>
+				</div>
+
+				<div class="button">
+					<button type="submit" value="submit">Submit</button>
+				</div>
+
+				<div>
+					<label>Processing results:</label>
+					<label class={{"red" if colour == "red" else "green"}}>{{output}}</label>
+				</div>
+			</form>
+			
+
+		</div>
+
+
+
+		
+		</div>
+	
+</body>
+</html>
