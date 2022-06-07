@@ -32,7 +32,7 @@ def text_preprocessing(text, language):
     #Defining stop_words
     if language == 'en':
         stop_words = eng
-    elif language == 'ms':
+    elif language == 'ms' or language == 'id':
         stop_words = mal
     else:
         stop_words = []
@@ -76,28 +76,33 @@ def hate_speech_detection():
     detected = t.detect(text)
     lang = detected.lang
     
-    #remove punctuations
-    nopunc_text = [char for char in text if char not in string.punctuation]
-    nopunc_text = ''.join(nopunc_text)
-    
-    #text preprocessing
-    preprocessed_text = text_preprocessing(nopunc_text, lang)
+    if lang == 'en' or lang =='ms' or lang == 'id':
+        #remove punctuations
+        nopunc_text = [char for char in text if char not in string.punctuation]
+        nopunc_text = ''.join(nopunc_text)
+        
+        #text preprocessing
+        preprocessed_text = text_preprocessing(nopunc_text, lang)
 
-    #classify text 
-    result = classify_hate_speech(preprocessed_text)
+        #classify text 
+        result = classify_hate_speech(preprocessed_text)
 
-    #return result
-    msg = ""
-    if result[0]['label'] == 'LABEL_0':
-        msg = "Good news! No hate speech is detected."
-        colour1 = 'green'
-    
+        #return result
+        msg = ""
+        if result[0]['label'] == 'LABEL_0':
+            msg = "Good news! No hate speech is detected."
+            colour1 = 'green'
+        
+        else:
+            msg = "Hate speech is detected in the input. Report to relevant authorities!"
+            colour1 = 'green'
+
     else:
-        msg = "Hate speech is detected in the input. Report to relevant authorities!"
+        msg = "Language error: Please submit input text in either Malay or English language."
         colour1 = 'red'
 
     return render_template("hate_speech_gui.html", input=text, output=msg, colour=colour1)
-    
+
     
 if __name__ == "__main__":
     app.run(debug=True)
