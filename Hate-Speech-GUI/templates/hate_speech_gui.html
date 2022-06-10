@@ -39,6 +39,9 @@
 			.red{
 				color:red;
 			}
+			.orange{
+				color:#FFAC00;
+			}
 			.green{
 				color:green;
 			}
@@ -76,7 +79,9 @@
 
 				<div>
 					<label>Processing results:</label>
-					<label class={{"red" if colour == "red" else "green"}}>{{output}}</label>
+					<label {% if colour == "green" %} class = "green" 
+						   {% elif colour == "red" %} class = "red"	
+						   {% else %} class = "orange" {% endif %}>{{output}}</label>
 				</div>
 			</form>
 			

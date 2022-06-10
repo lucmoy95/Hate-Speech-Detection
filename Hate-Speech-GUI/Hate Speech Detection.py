@@ -95,11 +95,11 @@ def hate_speech_detection():
         
         else:
             msg = "Hate speech is detected in the input. Report to relevant authorities!"
-            colour1 = 'green'
+            colour1 = 'red'
 
     else:
         msg = "Language error: Please submit input text in either Malay or English language."
-        colour1 = 'red'
+        colour1 = 'orange'
 
     return render_template("hate_speech_gui.html", input=text, output=msg, colour=colour1)
 
