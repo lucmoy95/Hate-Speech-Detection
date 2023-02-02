@@ -6,9 +6,12 @@ import nltk
 from nltk import TweetTokenizer
 from transformers import BertTokenizer, BertForSequenceClassification, Trainer, pipelines
 import transformers
-#import torch
-from googletrans import Translator
+import cld2
+# import torch
 from flask import Flask, app, request, render_template
+
+import os
+os.environ['CURL_CA_BUNDLE'] = ''
 
 #defining stopwords
 eng = list(pd.read_csv('Hate-Speech-GUI/english_stopwords.txt', sep = '/n', header= None, engine= 'python')[0])
@@ -71,10 +74,14 @@ def main():
 def hate_speech_detection():
     text = request.form['input_sentence']
 
-    #detect language
-    t = Translator()
-    detected = t.detect(text)
-    lang = detected.lang
+    #function to detect language
+    def detect_language(text):
+        
+        isReliable, textBytesFound, details = cld2.detect(text)
+
+        return details[0].language_code
+
+    lang = detect_language(text=text)
     
     if lang == 'en' or lang =='ms' or lang == 'id':
         #remove punctuations
